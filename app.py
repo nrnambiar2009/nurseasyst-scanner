@@ -19,13 +19,11 @@ def scan():
     except Exception as e:
         return jsonify({"error": f"Invalid image: {str(e)}"}), 400
 
-    # Try DataMatrix first
     dm_results = decode_dm(img)
     if dm_results:
         text = dm_results[0].data.decode("utf-8", errors="replace")
         return jsonify({"text": text, "type": "datamatrix"})
 
-    # Try 1D barcodes (Code128, EAN, UPC etc)
     results_1d = decode_1d(img)
     if results_1d:
         text = results_1d[0].data.decode("utf-8", errors="replace")
@@ -39,12 +37,3 @@ def health():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080)
-```
-
-**`requirements.txt`**
-```
-flask
-pillow
-pyzbar
-pylibdmtx
-gunicorn
