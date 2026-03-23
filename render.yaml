@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: nurseasyst-scanner
+    env: python
+    buildCommand: "apt-get install -y libzbar0 libdmtx0b && pip install -r requirements.txt"
+    startCommand: "gunicorn app:app --bind 0.0.0.0:8080"
+    plan: free
