@@ -6,6 +6,13 @@ import io
 
 app = Flask(__name__)
 
+def resize_image(img, max_size=1200):
+    ratio = min(max_size / img.width, max_size / img.height)
+    if ratio < 1:
+        new_size = (int(img.width * ratio), int(img.height * ratio))
+        img = img.resize(new_size, Image.LANCZOS)
+    return img
+
 @app.route("/scan", methods=["POST"])
 def scan():
     if "image" not in request.files:
@@ -16,6 +23,7 @@ def scan():
 
     try:
         img = Image.open(io.BytesIO(img_bytes)).convert("RGB")
+        img = resize_image(img)
     except Exception as e:
         return jsonify({"error": f"Invalid image: {str(e)}"}), 400
 
