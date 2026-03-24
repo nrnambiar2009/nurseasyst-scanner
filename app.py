@@ -20,11 +20,13 @@ def lookup_product_name(gtin):
         return None
     inner = gtin[1:-1]
     candidates = [
-        f"{inner[0:5]}-{inner[5:8]}",   # 5-3 from start → ProAir
-        f"{inner[0:5]}-{inner[5:9]}",   # 5-4 from start
+        f"{inner[0:5]}-{inner[5:8]}",   # 5-3
+        f"{inner[0:5]}-{inner[5:9]}",   # 5-4
+        f"{inner[2:7]}-{inner[7:10]}",  # 5-3 offset 2 → EpiPen
+        f"{inner[2:7]}-{inner[7:11]}",  # 5-4 offset 2
         f"{inner[2:6]}-{inner[6:10]}",  # 4-4 offset 2 → Symbicort
         f"{inner[1:6]}-{inner[6:10]}",  # 5-4 offset 1
-        f"{inner[2:7]}-{inner[7:11]}",  # 5-4 offset 2
+        f"{inner[1:6]}-{inner[6:9]}",   # 5-3 offset 1
         f"{inner[1:7]}-{inner[7:10]}",  # 6-3 offset 1
         f"{inner[2:8]}-{inner[8:11]}",  # 6-3 offset 2
     ]
